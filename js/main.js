@@ -18,20 +18,13 @@ document.querySelectorAll('.mobile-link').forEach(link => {
   link.addEventListener('click', () => mobileMenu.classList.remove('open'));
 });
 
-// Close menu on outside click
 document.addEventListener('click', (e) => {
   if (!navbar.contains(e.target) && !mobileMenu.contains(e.target)) {
     mobileMenu.classList.remove('open');
   }
 });
 
-// Scroll reveal
-const revealEls = document.querySelectorAll(
-  '.product-feature-info, .product-feature-media, .card, .story-text, .story-visual, .section-title, .section-sub, .cta-title, .cta-sub'
-);
-
-revealEls.forEach(el => el.classList.add('reveal'));
-
+// Scroll reveal — couvre toutes les classes reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -39,42 +32,50 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
 
-revealEls.forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
 
-// Thumbnail click — swap main image
-document.querySelectorAll('.product-feature-media').forEach(media => {
-  const mainImg = media.querySelector('.product-img');
-  const thumbs = media.querySelectorAll('.thumb-wrap img');
-
-  thumbs.forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      if (mainImg && thumb.src) {
-        const tmp = mainImg.src;
-        mainImg.src = thumb.src;
-        thumb.src = tmp;
-
-        const tmpAlt = mainImg.alt;
-        mainImg.alt = thumb.alt;
-        thumb.alt = tmpAlt;
-      }
-    });
-    thumb.style.cursor = 'pointer';
-  });
-});
-
-// Smooth anchor links with offset
+// Smooth anchor links avec offset navbar
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', (e) => {
-    const target = document.querySelector(anchor.getAttribute('href'));
+    const id = anchor.getAttribute('href');
+    if (id === '#') return;
+    const target = document.querySelector(id);
     if (!target) return;
     e.preventDefault();
-    const offset = parseInt(getComputedStyle(document.documentElement)
-      .getPropertyValue('--nav-h') || '52', 10);
+    const offset = parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue('--nav-h') || '52',
+      10
+    );
     window.scrollTo({
       top: target.getBoundingClientRect().top + window.scrollY - offset,
       behavior: 'smooth'
     });
+  });
+});
+
+// Transition entrée de page (fade-in)
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.35s ease';
+window.addEventListener('DOMContentLoaded', () => {
+  requestAnimationFrame(() => { document.body.style.opacity = '1'; });
+});
+
+// Transition sortie de page sur les liens internes
+document.querySelectorAll('a[href]').forEach(link => {
+  const href = link.getAttribute('href');
+  if (
+    !href ||
+    href.startsWith('#') ||
+    href.startsWith('mailto') ||
+    href.startsWith('http') ||
+    link.target === '_blank'
+  ) return;
+
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.body.style.opacity = '0';
+    setTimeout(() => { window.location.href = href; }, 320);
   });
 });
