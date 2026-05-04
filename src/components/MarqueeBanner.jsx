@@ -1,12 +1,18 @@
-const words = ['Cuir Artisanal', 'Rotin Tressé', 'Fait Main', 'Édition Limitée', 'AD Collection']
-const repeated = [...words, ...words]
+const items = [
+  'Cuir Artisanal', 'Rotin Tressé', 'Fait Main', 'Édition Limitée',
+  'AD Collection', 'Luxe Naturel', 'Savoir-Faire', 'Pièce Unique',
+]
+const doubled = [...items, ...items]
 
 export default function MarqueeBanner() {
   return (
-    <div className="marquee-wrap">
+    <div className="marquee-wrap" aria-hidden="true">
       <div className="marquee-track">
-        {repeated.map((w, i) => (
-          <span key={i}>{w}{i < repeated.length - 1 && <span style={{ margin: '0 14px', opacity: 0.3 }}>·</span>}</span>
+        {doubled.map((w, i) => (
+          <span key={i}>
+            {w}
+            <span className="dot" style={{ marginLeft: 20, marginRight: 0 }}>·</span>
+          </span>
         ))}
       </div>
     </div>
