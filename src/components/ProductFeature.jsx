@@ -80,7 +80,7 @@ export default function ProductFeature({ product, reversed }) {
             <img
               src={mainImg}
               alt={product.name}
-              style={{ position: 'absolute', inset: 0, zIndex: 2, transition: 'opacity 0.4s' }}
+              style={{ position: 'absolute', inset: 0, zIndex: 2, width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.4s' }}
               onError={e => { e.target.style.display = 'none' }}
             />
             <div style={{
