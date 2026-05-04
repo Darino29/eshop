@@ -182,9 +182,9 @@ export default function Hero() {
             transition={{ type: 'spring', stiffness: 180, damping: 28 }}
           >
             <img
-              src="/images/hero-bag.jpg"
+              src="/images/sac1.png"
               alt="AD Collection — Clutch Rotin & Cuir"
-              style={{ position: 'absolute', inset: 0, zIndex: 2 }}
+              style={{ position: 'absolute', inset: 0, zIndex: 2, width: '100%', height: '100%', objectFit: 'cover' }}
               onError={e => { e.target.style.display = 'none' }}
             />
             {/* Fallback gradient */}
@@ -228,9 +228,9 @@ export default function Hero() {
             whileHover={{ scale: 1.05 }}
           >
             <img
-              src="/images/box-main.jpg"
+              src="/images/sac4.png"
               alt="La Box Bag AD Collection"
-              style={{ position: 'absolute', inset: 0, zIndex: 2 }}
+              style={{ position: 'absolute', inset: 0, zIndex: 2, width: '100%', height: '100%', objectFit: 'cover' }}
               onError={e => { e.target.style.display = 'none' }}
             />
             <div style={{
